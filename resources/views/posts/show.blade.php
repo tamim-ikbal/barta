@@ -58,25 +58,23 @@
                                 aria-labelledby="user-menu-button"
                                 tabindex="-1">
                                 <a
-                                    href="#"
+                                    href="{{ route('posts.edit',$post->id) }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     role="menuitem"
                                     tabindex="-1"
                                     id="user-menu-item-0"
                                 >Edit</a
                                 >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="user-menu-item-1"
-                                    @click="$event.preventDefault(); document.getElementById('delete-form-{{ $post->id }}').submit()"
-                                >Delete</a
-                                >
-                                <form id="delete-form-{{ $post->id }}" action="{{ route('posts.destroy',$post->id) }}" method="post" class="hidden">
+                                <form action="{{ route('posts.destroy',$post->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
+                                    <button
+                                        type="submit"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                        onclick="confirm('Do you really want to delete this post?') !== true ? event.preventDefault() : ''"
+                                        role="menuitem" tabindex="-1" id="user-menu-item-1">
+                                        Delete
+                                    </button>
                                 </form>
                             </div>
                         </div>

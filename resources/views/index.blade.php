@@ -132,9 +132,9 @@
 
     <section
         id="newsfeed"
-        class="space-y-6">
+        class="space-y-6 relative">
 
-        @if($feeds->count())
+        @if($feeds->count() > 0)
             @foreach($feeds as $feed)
                 <article class="bg-white border-2 border-black rounded-lg shadow mx-auto max-w-none px-4 py-5 sm:px-6">
                     <!-- Barta Card Top -->
@@ -184,7 +184,8 @@
                                              class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                              role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                              tabindex="-1" style="display: none;">
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            <a href="{{ route('posts.edit',$feed->id) }}"
+                                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                role="menuitem" tabindex="-1" id="user-menu-item-0">Edit</a>
 
                                             <form action="{{ route('posts.destroy',$feed->id) }}" method="post">
@@ -193,6 +194,7 @@
                                                 <button
                                                     type="submit"
                                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                                    onclick="confirm('Do you really want to delete this post?') !== true ? event.preventDefault() : ''"
                                                     role="menuitem" tabindex="-1" id="user-menu-item-1">
                                                     Delete
                                                 </button>
@@ -252,6 +254,12 @@
                     <!-- /Barta Card Bottom -->
                 </article>
             @endforeach
+        @endif
+
+        @if($feeds->hasPages())
+            <div class="sticky bottom-2 md:bottom-5 bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100 px-3 py-2 rounded">
+                {{ $feeds->render() }}
+            </div>
         @endif
 
     </section>

@@ -8,9 +8,9 @@ use Illuminate\Contracts\View\View;
 
 class IndexController extends Controller
 {
-    public function __invoke():View
+    public function __invoke(): View
     {
-        return view('index',[
+        return view('index', [
             'feeds' => (new FeedService())->getFeed()
         ]);
     }

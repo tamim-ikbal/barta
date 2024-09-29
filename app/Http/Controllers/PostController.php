@@ -16,7 +16,7 @@ use Illuminate\Http\RedirectResponse;
 class PostController extends Controller
 {
 
-    public function store(PostRequest $request, CreatePost $action):RedirectResponse
+    public function store(PostRequest $request, CreatePost $action): RedirectResponse
     {
         try {
             $action->handle($request->user(), $request->validated());
@@ -38,14 +38,19 @@ class PostController extends Controller
         return view('posts.show', compact('post'));
     }
 
+    public function edit(Post $post): View
+    {
+        return view('posts.edit', compact('post'));
+    }
+
     public function update(PostRequest $request, Post $post, UpdatePost $action)
     {
         try {
             $action->handle($request->user(), $post, $request->validated());
 
-            return to_route('home')->success(__('Post Updated!'));
+            return to_route('posts.edit',$post->id)->success(__('Post Updated!'));
         } catch (Exception $exception) {
-            return back()->error();
+            return to_route('posts.edit',$post->id)->error();
         }
     }
 

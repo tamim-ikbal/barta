@@ -16,7 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{username}', [ProfileController::class, 'update'])->name('update');
     });
 
-    Route::resource('posts', PostController::class)->except(['create', 'edit', 'index']);
+    Route::resource('posts', PostController::class)->except(['create', 'index']);
 
 });
 
