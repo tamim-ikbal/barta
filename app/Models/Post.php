@@ -46,27 +46,9 @@ class Post extends Model
     public function contentMarkdown(): Attribute
     {
         return Attribute::get(function (mixed $value, array $attributes) {
-            return Str::markdown(
-                $attributes['content'],
-                [
-                    'html_input' => 'strip',
-                    'allow_unsafe_links' => false,
-                    'max_nesting_level' => 5,
-                    'mentions' => [
-                        'hashtags' => [
-                            'prefix' => '#',
-                            'pattern' => '[\w\$-]+',
-                            'generator' =>url('#%s')
-                        ]
-                    ]
-                ],
-                [
-                    new MentionExtension(),
-                ]
-            );
+            return str_markdown($attributes['content']);
         });
     }
-
 
 
 }
