@@ -2,6 +2,7 @@
 
 namespace App\Actions\Posts;
 
+use App\Enums\PostStatus;
 use App\Models\Post;
 use Illuminate\Contracts\Auth\Authenticatable;
 

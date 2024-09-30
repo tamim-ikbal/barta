@@ -39,7 +39,7 @@ class RegisterController extends Controller
 
             return redirect()->to('/');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['email' => 'Registration failed. Please try again later.']);
+            return back()->withInput()->withErrors(['email' => __('Registration failed. Please try again later.')]);
         }
     }
 }

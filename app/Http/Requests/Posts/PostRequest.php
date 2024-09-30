@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Posts;
 
+use App\Enums\PostStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PostRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'barta' => ['required','string']
+            'barta' => ['required', 'string'],
         ];
     }
 }

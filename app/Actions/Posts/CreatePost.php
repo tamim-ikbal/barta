@@ -14,7 +14,7 @@ class CreatePost
         $post = Post::create([
             'user_id' => $user->id,
             'content' => $data['barta'],
-            'status' => PostStatus::PUBLISHED
+            'status' => PostStatus::PUBLISHED,
         ]);
 
         event(new PostCreated($post));

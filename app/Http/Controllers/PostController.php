@@ -27,30 +27,40 @@ class PostController extends Controller
         }
     }
 
-    public function show(Post $post): View
+    public function show(string $id): View
     {
-        $post->with([
-            'author' => fn($query) => $query->select('id', 'name', 'username')
-        ]);
+        $post = Post::query()
+            ->with([
+                'author' => fn($query) => $query->select('id', 'name', 'username')
+            ])
+            ->published()
+            ->findOrFail($id);
 
         (new PostService())->incrementViews($post);
 
         return view('posts.show', compact('post'));
     }
 
-    public function edit(Post $post): View
+    public function edit(string $id): View
     {
+        $post = Post::query()
+            ->where('user_id', auth()->id())
+            ->findOrFail($id);
         return view('posts.edit', compact('post'));
     }
 
-    public function update(PostRequest $request, Post $post, UpdatePost $action)
+    public function update(PostRequest $request, string $id, UpdatePost $action)
     {
+        $post = Post::query()
+            ->where('user_id', auth()->id())
+            ->findOrFail($id);
+
         try {
             $action->handle($request->user(), $post, $request->validated());
 
-            return to_route('posts.edit',$post->id)->success(__('Post Updated!'));
+            return to_route('posts.edit', $post->id)->success(__('Post Updated!'));
         } catch (Exception $exception) {
-            return to_route('posts.edit',$post->id)->error();
+            return to_route('posts.edit', $post->id)->error();
         }
     }
 
