@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 class EmailVerificationController extends Controller
 {
-    public function notice(): View
+    public function notice(): View|RedirectResponse
     {
-        //Return Is Already Varified
+        //Return Is Already Verified
         if (Auth::user()->hasVerifiedEmail()) {
             return redirect()->route('home');
         }
