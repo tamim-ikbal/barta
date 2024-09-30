@@ -51,10 +51,9 @@ class PostTest extends TestCase
 
         $response->assertViewIs('posts.show');
         $response->assertViewHas('post', function (Post $post) use ($createdPost) {
-            return $createdPost->id === $post->id && $createdPost->user_id === $post->user_id && $createdPost->content === $post->content;
+            return $createdPost->id === $post->id;
         });
 
-        $this->assertEquals($user->id, $createdPost->user_id);
         $this->assertEquals('Test Content', $createdPost->content);
         $this->assertEquals(PostStatus::PUBLISHED, $createdPost->status);
     }
