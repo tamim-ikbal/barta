@@ -34,6 +34,7 @@ now run with<br>
 
 ### Run Asset Builder
 ```sail yarn dev```<br>
+or<br>
 ```sail yarn build```
 
 
