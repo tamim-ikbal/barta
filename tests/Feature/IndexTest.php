@@ -40,7 +40,10 @@ class IndexTest extends TestCase
 
         //Pagination
         $response->assertViewHas('feeds', function ($feeds) use ($lastPost) {
-            return !$feeds->contains($lastPost);
+            return $feeds->count() === 20;
+        });
+        $response->assertViewHas('feeds', function ($feeds) use ($lastPost) {
+            return $feeds->hasMorePages();
         });
     }
 }

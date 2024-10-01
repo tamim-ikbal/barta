@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Posts\CreatePost;
 use App\Actions\Posts\DeletePost;
 use App\Actions\Posts\UpdatePost;
+use App\Enums\PostStatus;
 use App\Http\Requests\Posts\PostDeleteRequest;
 use App\Http\Requests\Posts\PostRequest;
 use App\Models\Post;
@@ -29,12 +30,11 @@ class PostController extends Controller
 
     public function show(string $id): View
     {
-        $post = Post::query()
-            ->with([
-                'author' => fn($query) => $query->select('id', 'name', 'username')
-            ])
-            ->published()
-            ->findOrFail($id);
+        $post = PostService::findOrFail(
+            id: $id,
+            with: ['author' => fn($query) => $query->select('id', 'name', 'username')],
+            status: PostStatus::PUBLISHED
+        );
 
         (new PostService())->incrementViews($post);
 
@@ -43,18 +43,13 @@ class PostController extends Controller
 
     public function edit(string $id): View
     {
-        $post = Post::query()
-            ->where('user_id', auth()->id())
-            ->findOrFail($id);
+        $post = PostService::findPostByUser(postId: $id, userId: auth()->id());
         return view('posts.edit', compact('post'));
     }
 
     public function update(PostRequest $request, string $id, UpdatePost $action)
     {
-        $post = Post::query()
-            ->where('user_id', auth()->id())
-            ->findOrFail($id);
-
+        $post = PostService::findPostByUser(postId: $id, userId: auth()->id());
         try {
             $action->handle($request->user(), $post, $request->validated());
 
