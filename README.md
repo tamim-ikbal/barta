@@ -23,10 +23,17 @@ now run with<br>
 
 **_NOTE:_** when you run the application it will take some to get the docker images, and -d keeps the server alive if you close the terminal.
 
+### Run Migrate
+```sail artisan migrate:fresh --seed```
+
 ### File Storage Link
 ```sail artisan storage:link```
 
-### Run Migrate
-```sail artisan migrate:fresh --seed```
+### Install Npm Packages
+```sail yarn install```
+
+### Run Asset Builder
+```sail yarn dev```<br>
+```sail yarn build```
 
 
