@@ -26,3 +26,7 @@ now run with<br>
 ### File Storage Link
 ```sail artisan storage:link```
 
+### Run Migrate
+```sail artisan migrate:fresh --seed```
+
+
